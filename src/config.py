@@ -1,5 +1,6 @@
 from starlette.config import Config
 
+
 config = Config(".env_dev")
 
 DATABASE_URL = config("JWTS_DATABASE_URL", cast=str, default="")
