@@ -11,7 +11,8 @@ import sys
 sys.path.append(os.path.join(sys.path[0], 'src'))
 
 from src.config import DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT
-from src.auth.models import Base
+from src.auth.models import Base as auth_model
+from src.devices.models import Base as device_model
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -33,7 +34,8 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = Base.metadata
+target_metadata = auth_model.metadata
+target_metadata = device_model.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
