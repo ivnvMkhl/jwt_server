@@ -19,13 +19,5 @@ app.include_router(
     tags=["Devices"],
     )
 
-@auth_router.get("/")
-async def authenticated_route():
-    return {"message": f"Hello!"}
-    
-@auth_router.get("/auth")
-async def authenticated_route(user: User = Depends(current_active_user)):
-    return {"message": f"Hello {user.email}!"}
-
 if __name__ == "__main__":
     run('main:app', port=PORT, reload=True, host=HOST)

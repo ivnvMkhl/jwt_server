@@ -17,8 +17,22 @@ async def add_devices(
         session.add(added_device)
     await session.commit()
 
-async def get_all_devices( session: AsyncSession ):
+async def all_devices_info( session: AsyncSession ):
     query = select(Device)
-    result: ChunkedIteratorResult = await session.execute(query)
-    rows_list: List[Device] = result.scalars()
-    return [i.__dict__ for i in rows_list]
+    try:
+        result: ChunkedIteratorResult = await session.execute(query)
+        rows_list: List[Device] = result.scalars()
+        return (i.__dict__ for i in rows_list)
+    except Exception as error:
+        return {"status": "error", "message": error.args}
+        
+async def device_by_id( id: int, session: AsyncSession ):
+    query = select(Device).filter(Device.id == id)
+    try:
+        result: ChunkedIteratorResult = await session.execute(query)
+        rows_list: List[Device] = result.one()
+        return rows_list[0]
+    except Exception as error:
+        return {"status": "error", "message": error.args}
+    
+
